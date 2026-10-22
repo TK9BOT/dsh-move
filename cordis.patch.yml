@@ -1,0 +1,4 @@
+# dsh-move bundle: one dual-face plugin row.
+- insert:
+    - id: dsh-move
+      name: "dsh-move"
