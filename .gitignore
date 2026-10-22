@@ -1,0 +1,7 @@
+node_modules/
+dsh-move/exports/
+dsh-move/backups/
+dsh-move/uploads/
+*.log
+
+push.ps1

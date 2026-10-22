@@ -1,0 +1,62 @@
+{
+  "name": "dsh-move",
+  "version": "0.1.7",
+  "type": "module",
+  "description": "DSH native backup and migration: workspaces, sessions, attachments, plugins, skills, MCP and settings in one archive.",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "icon.svg",
+    "README.md",
+    "README.zh-CN.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "icon": "./icon.svg",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "slots",
+        "connection"
+      ]
+    }
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "migration",
+    "workspace",
+    "session",
+    "backup"
+  ],
+  "scripts": {
+    "test": "node tests/smoke.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TK9BOT/dsh-move.git"
+  },
+  "homepage": "https://github.com/TK9BOT/dsh-move#readme",
+  "os": [
+    "win32"
+  ],
+  "author": "dsh-move contributors",
+  "bugs": {
+    "url": "https://github.com/TK9BOT/dsh-move/issues"
+  }
+}
