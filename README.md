@@ -39,6 +39,10 @@ Restart DSH once. The single entry is:
 
 The plugin is plain ESM. There is no build step, native addon or postinstall script.
 
+## Update
+
+Open **Settings -> Backup & Migration** and click **Check for updates**. When a newer release exists, **Update to vX** downloads it from GitHub and installs it into the active profile. Restart DSH to load the new version. The update button is the same page you use for migration.
+
 ## Use
 
 ### 1. Pack
