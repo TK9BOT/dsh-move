@@ -1,6 +1,6 @@
 {
   "name": "dsh-move",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "type": "module",
   "description": "DSH native backup and migration: workspaces, sessions, attachments, plugins, skills, MCP and settings in one archive.",
   "main": "lib/index.js",
