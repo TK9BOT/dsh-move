@@ -6,6 +6,16 @@ A native DeepSeek Harness plugin for moving a DSH setup to another Windows compu
 
 DSH Move is an independent community project. It is **not affiliated with, endorsed by, or sponsored by DeepSeek**. “DeepSeek Harness” is used descriptively to identify the host application.
 
+> **Data safety notice**
+>
+> DSH Move handles personal files, chat sessions, plugin settings and possibly API keys. **Back up your data independently before using this tool.** Do not rely on this plugin as your only backup.
+>
+> - The archive is plaintext and may contain private content, credentials or API keys. Store it securely and never share it.
+> - Restore operations can overwrite or merge files, install third-party plugins and apply MCP commands. Test on a non-critical copy first.
+> - This project **cannot guarantee the security, integrity, completeness or recoverability of your data**. Data loss, corruption, leaks or service interruption may still occur.
+> - The software is provided “AS IS”, without warranty. To the maximum extent permitted by law, the authors are not liable for any data loss, disclosure or damages arising from its use.
+> - Only restore archives from sources you trust.
+
 ## What it does
 
 One **Backup & Migration** page in DSH Settings:
@@ -147,6 +157,16 @@ The code is original to this project. It does not include code from DSH, dsh-con
 把一台 Windows 电脑上的 DeepSeek Harness（DSH）环境迁移到另一台电脑的原生插件。
 
 DSH Move 是独立社区项目，**与 DeepSeek 官方无隶属、无背书关系**。“DeepSeek Harness”仅用于说明兼容的宿主应用。
+
+> **数据安全提示**
+>
+> DSH Move 会处理个人文件、会话、插件设置，可能包含 API Key。**使用前请先独立备份你的数据。** 不要把本插件当作唯一备份。
+>
+> - 归档是明文，可能包含隐私内容、凭据或 API Key；请妥善保管，不要外传。
+> - 恢复操作可能覆盖/合并文件、安装第三方插件、应用 MCP 命令；请先在非关键副本上试运行。
+> - 本项目**无法保证数据的安全、完整、齐全或可恢复**；仍可能发生数据丢失、损坏、泄露或服务中断。
+> - 软件按“现状”提供，不附带任何保证；在法律允许的最大范围内，作者不对使用本软件造成的数据丢失、泄露或损失承担责任。
+> - 只恢复你信任的来源的归档。
 
 ## 功能
 
