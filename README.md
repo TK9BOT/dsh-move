@@ -1,6 +1,6 @@
 # DSH Move
 
-**English** | [简体中文](README.zh-CN.md)
+**English** | [简体中文](#简体中文)
 
 A native DeepSeek Harness plugin for moving a DSH setup to another Windows computer.
 
@@ -138,3 +138,145 @@ Host half: `lib/index.js`. Browser page: `lib/client.js`. Workspace engine: `lib
 MIT. See [LICENSE](LICENSE).
 
 The code is original to this project. It does not include code from DSH, dsh-config-manager or other third-party plugins. DSH APIs are used through the published plugin interface. The name “DeepSeek Harness” is used only to describe compatibility.
+
+---
+
+<a id="简体中文"></a>
+# DSH Move · 简体中文
+
+把一台 Windows 电脑上的 DeepSeek Harness（DSH）环境迁移到另一台电脑的原生插件。
+
+DSH Move 是独立社区项目，**与 DeepSeek 官方无隶属、无背书关系**。“DeepSeek Harness”仅用于说明兼容的宿主应用。
+
+## 功能
+
+DSH 设置中只有一个 **备份与迁移** 页面：
+
+- 把工作区、项目文件、会话和附件打进一个归档
+- 同一个归档里包含插件清单、插件设置、技能、MCP 和 profile 设置
+- 在另一台 Windows 电脑恢复
+- 通过 DSH 插件管理器自动安装缺失插件
+- DSH 运行中创建/合并工作区并挂载会话
+- 记住上次迁移选项，并询问是否沿用
+
+## 环境要求
+
+- Windows 10 1803 及以上（当前版本依赖系统 `tar.exe`，仅支持 Windows）
+- DeepSeek Harness 0.2.x
+- 从 GitHub 安装时需要 Git 在 `PATH` 中
+
+## 安装
+
+在 DSH 插件页安装：
+
+    github:TK9BOT/dsh-move
+
+或用命令行：
+
+    dsh plugin --profile desktop add github:TK9BOT/dsh-move
+
+重启 DSH 一次。设置中只有一个入口：
+
+> **设置 -> 备份与迁移**
+
+插件是纯 ESM，无构建步骤、无原生扩展、无 postinstall 脚本。
+
+## 更新
+
+打开 **设置 -> 备份与迁移**，点 **检查更新**；发现新版本后点 **一键更新到 vX**，插件会从 GitHub 下载并安装到当前 profile。重启 DSH 后生效。更新按钮就在迁移页面里。
+
+## 使用
+
+### 1. 打包
+
+1. 勾选工作区
+2. 逐个选择会话，或全选
+3. 选择保存位置：
+   - 目录留空：弹出系统“另存为”
+   - 填写目录：直接写到该目录
+4. 点“打包”
+
+输出是一个 `.tar.gz` 归档和 `.sha256` 校验文件。
+
+### 2. 恢复
+
+1. 选择归档文件或直接上传
+2. 填写目标根目录
+3. 点“恢复”
+
+默认行为：
+
+- 项目文件：**合并**（保留目标已有文件，只补缺失）
+- 已有会话：保留
+- 已有插件：保留目标版本
+- 技能/MCP/设置：与目标合并
+
+高级选项：
+
+- 项目文件：合并 / 覆盖（先备份目标）/ 跳过
+- 会话冲突：保留 / 替换（先备份目标会话）
+- 配置冲突：保留目标 / 用归档覆盖
+- 目标缺少的插件包，会在 DSH 插件管理器可用时自动安装
+
+技能、MCP、插件声明和设置需要重启 DSH 生效。工作区和会话是热挂载的；如果侧边栏没有刷新，点页面的“刷新页面”，或重启 DSH。
+
+## 工作区实际放到哪里
+
+DSH 工作区是注册在 DSH 里的绝对路径，不是 DSH 程序目录旁边的文件夹。DSH Move 从 DSH 读取这些路径，所以项目文件夹和程序目录可以不在同一个盘。
+
+恢复目标是：
+
+    <目标根目录>/<工作区标题>
+
+例如：
+
+- 目标根目录 `D:\DSH迁移`，工作区 `我的项目` -> `D:\DSH迁移\我的项目`
+- 目标 DSH 已有同名工作区：合并到已有路径，不新增第二行
+- 目标 DSH 完全没有工作区：自动创建文件夹和工作区
+- 不会沿用源电脑的绝对路径；会话里的 `cwd` 会改写到目标路径
+
+只打包**已经加入 DSH 的工作区**。一个从没添加为工作区的普通文件夹不会被自动发现。
+
+## 归档里有什么
+
+- 工作区项目文件（排除常见生成目录、`.git`、缓存、日志、`.env`、密钥文件）
+- 会话日志和投影缓存
+- 附件（可选）
+- 插件声明、bundle 选择和插件设置
+- `$DSH_HOME/skills` 下的用户技能
+- `$DSH_HOME/cordis.patch.yml` 里的 MCP 和用户 patch
+- profile patch 和部分设置文件
+
+`$DSH_HOME/.credentials.yaml` 里的凭据**不会**打包。插件设置按当前实际值导出，可能包含 API Key；归档按敏感明文文件保管。
+
+## 安全
+
+- 打包时源文件只读
+- 恢复时校验归档 SHA256（有 sidecar 时），拒绝绝对路径、目录穿越和链接条目，拒绝写入 DSH home 内部或别的工区内部
+- 覆盖/替换前先备份目标
+- 工作区恢复失败会回滚新建文件和注册信息
+- 只恢复你信任的归档。插件自动安装和 MCP 配置在重启后可以执行第三方代码，归档不只是数据
+- 正常使用时接口只允许本机回环和同源访问，不要把 DSH Web 端口暴露到不可信网络
+
+## 已知限制
+
+- 当前只支持 Windows，依赖系统 `tar.exe`
+- 项目文件策略是全局的，不能按工作区单独设置
+- 同名工作区会合并到第一个匹配的目标路径
+- `link:` / `file:` 来源的插件换机后无效，会提示并跳过
+- MCP 命令可能包含绝对路径，目标路径不同时需要手动调整
+- 新安装插件的设置如果对应 namespace 尚未激活，可能需要重启后再恢复一次
+- 归档未加密
+
+## 开发
+
+    npm test
+    dsh plugin --profile desktop add link:<本仓库绝对路径>
+
+宿主端：`lib/index.js`；浏览器页面：`lib/client.js`；工作区引擎：`lib/engine`；恢复逻辑：`lib/native-restore.js` 和 `lib/config-migrate.js`。
+
+## 许可与归属
+
+MIT，见 [LICENSE](LICENSE)。
+
+代码为本项目原创，不包含 DSH、dsh-config-manager 或其他第三方插件的代码；通过公开插件接口调用 DSH。项目名称仅用于描述兼容性。
