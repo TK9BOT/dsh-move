@@ -143,8 +143,6 @@ DSH 工作区是注册在 DSH 里的绝对路径，不是 DSH 程序目录旁边
 
 宿主端：`lib/index.js`；浏览器页面：`lib/client.js`；工作区引擎：`lib/engine`；恢复逻辑：`lib/native-restore.js` 和 `lib/config-migrate.js`。
 
-## 许可与归属
+## 许可
 
 MIT，见 [LICENSE](LICENSE)。
-
-代码为本项目原创，不包含 DSH、dsh-config-manager 或其他第三方插件的代码；通过公开插件接口调用 DSH。项目名称仅用于描述兼容性。
