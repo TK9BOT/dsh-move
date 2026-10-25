@@ -11,10 +11,7 @@ DSH Move is an independent community project. It is **not affiliated with, endor
 > DSH Move handles personal files, chat sessions, plugin settings and possibly API keys. **Back up your data independently before using this tool.** Do not rely on this plugin as your only backup.
 >
 > - The archive is plaintext and may contain private content, credentials or API keys. Store it securely and never share it.
-> - Restore operations can overwrite or merge files, install third-party plugins and apply MCP commands. Test on a non-critical copy first.
-> - This project **cannot guarantee the security, integrity, completeness or recoverability of your data**. Data loss, corruption, leaks or service interruption may still occur.
-> - The software is provided “AS IS”, without warranty. To the maximum extent permitted by law, the authors are not liable for any data loss, disclosure or damages arising from its use.
-> - Only restore archives from sources you trust.
+> - This project **cannot guarantee the security, integrity, completeness or recoverability of your data**. See [Safety](#safety).
 
 ## What it does
 
@@ -128,7 +125,6 @@ Credential values in `$DSH_HOME/.credentials.yaml` are **not** packed. Plugin se
 
 ## Known limits
 
-- Windows-only in this release; uses the system `tar.exe`.
 - Project policy is global, not per workspace.
 - Duplicate workspace titles are merged into the first matching target path.
 - Plugin specs using `link:` or `file:` are reported and skipped on another machine.
